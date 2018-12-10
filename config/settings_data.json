@@ -1,12 +1,12 @@
 {
   "current": {
-    "pluginseo_pageTitleTruncateChars": "70",
-    "pluginseo_pageTitleEnableAppender": true,
+    "pluginseo_pageTitleTruncateChars": "999",
+    "pluginseo_pageTitleEnableAppender": false,
     "pluginseo_pageTitleAppenderTemplate": "| Stock Photo Tees for high quality clichéd t-shirt designs",
     "pluginseo_pageTitleAppenderTargetLength": "70",
     "pluginseo_pageTitleTemplateApplyToAll": false,
     "pluginseo_pageTitleDefaultTemplate": "%% page_title %%",
-    "pluginseo_pageTitleIndexTemplate": "T-shirts and sweaters stock photo apparel",
+    "pluginseo_pageTitleIndexTemplate": "stockphototees stockphototees stockphototees stockphototees stockphototees stockphototees stockphototees stockphototees",
     "pluginseo_pageTitlePageTemplate": "%% page_title %%",
     "pluginseo_pageTitleSearchTemplate": "Buy %% search.terms %% t-shirts from %% shop.name %%",
     "pluginseo_pageTitleProductTemplate": "%% product.title %% %% product.selected_variant.title %%",

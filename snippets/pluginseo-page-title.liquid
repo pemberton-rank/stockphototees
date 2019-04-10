@@ -97,6 +97,9 @@
     {%- capture pageTitleWithAppendage -%}{{ pageTitle }} {{ pageTitleAppend }}{%- endcapture -%}
 
     {%- assign pluginseo_pageTitleTruncateChars = settings.pluginseo_pageTitleTruncateChars | plus: 0 -%}
+    {%- if pluginseo_pageTitleTruncateChars == 0 -%}
+      {%- assign pluginseo_pageTitleTruncateChars = 999 -%}
+    {%- endif -%}
     {%- assign pluginseo_pageTitleAppenderTargetLength = settings.pluginseo_pageTitleAppenderTargetLength | plus: 0 -%}
     {%- assign pageTitleLength = pageTitle | size | plus: 0 -%}
     {%- assign pageTitleWithAppendageLength = pageTitleWithAppendage | size | plus: 0 -%}
@@ -107,13 +110,17 @@
     {%- endif -%}
   {%- endif -%}
 
-  {%- if settings.pluginseo_pageTitleTruncateChars != nil -%}
+  {%- if settings.pluginseo_pageTitleTruncateChars != blank -%}
     {%- assign finalPageTitleLength = pageTitle | size | plus: 0 -%}
     {%- assign pluginseo_pageTitleTruncateChars = settings.pluginseo_pageTitleTruncateChars | plus: 0 -%}
+    {%- if pluginseo_pageTitleTruncateChars == 0 -%}
+      {%- assign pluginseo_pageTitleTruncateChars = 999 -%}
+    {%- endif -%}
+
     {%- if finalPageTitleLength > pluginseo_pageTitleTruncateChars -%}
       {%- assign pTF = pTF | append: '-tr' -%}
     {%- endif -%}
-    {%- capture pageTitle -%}{{ pageTitle | truncate: settings.pluginseo_pageTitleTruncateChars, "" }}{%- endcapture -%}
+    {%- capture pageTitle -%}{{ pageTitle | truncate: pluginseo_pageTitleTruncateChars, "" }}{%- endcapture -%}
   {%- endif -%}
   <title>{{ pageTitle | strip_html | strip_newlines }}</title>
 {%- endif -%}

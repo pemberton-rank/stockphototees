@@ -93,13 +93,16 @@
     {%- capture metaDescription -%}{% include 'pluginseo-parse' template:[pageUnderscoreDescription] %}{%- endcapture -%}
   {%- endif -%}
 
-  {%- if settings.pluginseo_metaDescriptionTruncateChars != nil -%}
+  {%- if settings.pluginseo_metaDescriptionTruncateChars != blank -%}
     {%- assign finalMetaDescription = metaDescription | size | plus: 0 -%}
     {%- assign pluginseo_metaDescriptionTruncateChars = settings.pluginseo_metaDescriptionTruncateChars | plus: 0 -%}
+    {%- if pluginseo_metaDescriptionTruncateChars == 0 -%}
+      {%- assign pluginseo_metaDescriptionTruncateChars = 170 -%}
+    {%- endif -%}
     {%- if finalMetaDescription > pluginseo_metaDescriptionTruncateChars -%}
       {%- assign mDF = mDF | append: '-tr' -%}
     {%- endif -%}
-    {%- capture metaDescription -%}{{ metaDescription | truncate: settings.pluginseo_metaDescriptionTruncateChars, "" }}{%- endcapture -%}
+    {%- capture metaDescription -%}{{ metaDescription | truncate: pluginseo_metaDescriptionTruncateChars, "" }}{%- endcapture -%}
   {%- endif -%}
 
   {%- if metaDescription != blank -%}

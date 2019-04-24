@@ -11,7 +11,7 @@
     "pluginseo_pageTitleSearchTemplate": "Buy %% search.terms %% t-shirts from %% shop.name %%",
     "pluginseo_pageTitleProductTemplate": "%% product.title %% %% product.selected_variant.title %%",
     "pluginseo_pageTitleCollectionTemplate": "Shop %% current_tags || join: ', ' || append_not_empty: ' ' %%%% collection.title %% at %% shop.name %%",
-    "pluginseo_pageTitleCatalogTemplate": "Shop %% collections || join: ', ' || append_not_empty: ' ' %%%% collection.title || escape %% at %% shop.name %%",
+    "pluginseo_pageTitleCatalogTemplate": "%% collections || join: ', ' || append_not_empty: ' ' %%",
     "pluginseo_pageTitleBlogTemplate": "",
     "pluginseo_pageTitleArticleTemplate": "",
     "pluginseo_pageTitle404Template": "",

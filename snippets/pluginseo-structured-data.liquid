@@ -2,7 +2,7 @@
   ----------------------------------------------------------------------------------
    Plug in SEO Plus for Shopify
 
-   Copyright (c) 2018 Pemberton Rank Ltd, a company registered in England 7341337
+   Copyright (c) 2019 Pemberton Rank Ltd, a company registered in England 7341337
 
    This file is subject to the license at https://www.pluginseo.com/eula
   ----------------------------------------------------------------------------------
@@ -29,7 +29,7 @@
   {%- assign articleContent = langify_description  -%}
  {%- endif -%}
 
-  <script type="application/ld+json">
+  <script data-desc="seo-news" type="application/ld+json">
     {
     "@context": "http://schema.org",
     "@type": "NewsArticle",
@@ -74,7 +74,7 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
 
 {%- unless rootTemplate == 'index' or rootTemplate == 'cart' or rootTemplate == 'list-collections' -%}
 
-<script type="application/ld+json">
+<script data-desc="seo-breadcrumb-list" type="application/ld+json">
 {
   "@context": "http://schema.org",
   "@type": "BreadcrumbList",
@@ -186,7 +186,6 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
 
 {%- endunless -%}
 
-
 {%- comment -%}
   https://developers.google.com/search/docs/data-types/logo
   https://developers.google.com/search/docs/data-types/corporate-contacts
@@ -195,7 +194,7 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
 
 {%- assign links = settings.pluginseo_structuredDataSocialProfileLinks | newline_to_br | split: '<br />' -%}
 
-<script type="application/ld+json">
+<script data-desc="seo-organization" type="application/ld+json">
   { "@context" : "http://schema.org",
     "@type" : "Organization",
     "name" : "{{- shopName -}}",
@@ -221,7 +220,7 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
    {%- assign productTitle = langify_title -%}
    {%- assign productDescription = langify_description -%}
   {%- endif -%}
-  <script type="application/ld+json">
+  <script data-desc="seo-product" type="application/ld+json">
     {
       "@context": "http://schema.org/",
       "@type": "Product",
@@ -234,26 +233,26 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
         "@type": "Thing",
         "name": "{{- product.vendor -}}"
       },
-	  {%- if product.metafields.spr.reviews -%}
-      	{%- comment -%}
+          {%- if product.metafields.spr.reviews -%}
+        {%- comment -%}
           These are perhaps legacy...
         {%- endcomment -%}
         {%- assign sprAverage = product.metafields.spr.reviews | split: '<meta itemprop="average" content="' -%}
-	 	{%- assign sprAverage = sprAverage[1] | split: '" />' -%}
+                {%- assign sprAverage = sprAverage[1] | split: '" />' -%}
         {%- assign sprVotes = product.metafields.spr.reviews | split: '<meta itemprop="votes" content="' -%}
-	 	{%- assign sprVotes = sprVotes[1] | split: '" />' -%}
+                {%- assign sprVotes = sprVotes[1] | split: '" />' -%}
         {%- assign sprBest = product.metafields.spr.reviews | split: '<meta itemprop="best" content="' -%}
-	 	{%- assign sprBest = sprBest[1] | split: '" />' -%}
+                {%- assign sprBest = sprBest[1] | split: '" />' -%}
         {%- assign sprWorst = product.metafields.spr.reviews | split: '<meta itemprop="worst" content="' -%}
-	 	{%- assign sprWorst = sprWorst[1] | split: '" />' -%}
-        {%- if sprAverage[0] -%}
-		  "aggregateRating": {
+                {%- assign sprWorst = sprWorst[1] | split: '" />' -%}
+        {%- if sprAverage[0] != blank and sprVotes[0] != blank and sprBest[0] != blank and sprWorst[0] != blank-%}
+                  "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "{{- sprAverage[0] -}}",
-            "ratingCount": "{{- sprVotes[0] -}}",
-            "reviewCount": "{{- sprVotes[0] -}}",
-            "bestRating": "{{- sprBest[0] -}}",
-            "worstRating": "{{- sprWorst[0] -}}"
+            "ratingValue": {{- sprAverage[0] -}},
+            "ratingCount": {{- sprVotes[0] -}},
+            "reviewCount": {{- sprVotes[0] -}},
+            "bestRating": {{- sprBest[0] -}},
+            "worstRating": {{- sprWorst[0] -}}
           },
         {%- else -%}
           {%- comment -%}
@@ -267,21 +266,26 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
           {%- assign sprReviewCount = sprReviewCount[1] | split: '">' -%}
           {%- assign sprRatingValue = product.metafields.spr.reviews | split: '<meta itemprop="ratingValue" content="' -%}
           {%- assign sprRatingValue = sprRatingValue[1] | split: '">' -%}
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "{{- sprRatingValue[0] -}}",
-            "ratingCount": "{{- sprReviewCount[0] -}}",
-            "reviewCount": "{{- sprReviewCount[0] -}}",
-            "bestRating": "{{- sprBestRating[0] -}}",
-            "worstRating": "{{- sprWorstRating[0] -}}"
-          },
+          {%- if sprRatingValue[0] != blank and sprReviewCount[0] != blank and sprBestRating[0] != blank and sprWorstRating[0] != blank- %}
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": {{- sprRatingValue[0] -}},
+              "ratingCount": {{- sprReviewCount[0] -}},
+              "reviewCount": {{- sprReviewCount[0] -}},
+              "bestRating": {{- sprBestRating[0] -}},
+              "worstRating": {{- sprWorstRating[0] -}}
+            },
+          {%- endif %}
         {%- endif -%}
       {%- endif -%}
       "offers": {
         "@type": "Offer",
         "priceCurrency": "{{- shop.currency -}}",
-        "price": "{{- product.selected_or_first_available_variant.price | money_without_currency | remove: "," -}}",
+        "price": "{{- product.selected_or_first_available_variant.price | divided_by: 100.00 -}}",
+
         "availability": "{%- if product.selected_or_first_available_variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+        "url": "{{ shop.url }}{{ product.selected_or_first_available_variant.url }}",
+
         "seller": {
           "@type": "Organization",
           "name": "{{- shopName -}}"
@@ -291,12 +295,11 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
   </script>
 {%- endif -%}
 
-
 {%- comment -%}
 https://developers.google.com/search/docs/data-types/sitename
 https://developers.google.com/search/docs/data-types/sitelinks-searchbox
 {%- endcomment -%}
-<script type="application/ld+json">
+<script data-desc="seo-website" type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "WebSite",

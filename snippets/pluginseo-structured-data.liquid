@@ -9,6 +9,7 @@
 {%- endcomment -%}
 
 {%- assign logoUrl = 'pluginseo_structuredDataLogo.png' | asset_img_url  -%}
+{%- assign organizationId = shop.url | append: "#organization" -%}
 
 {%- assign shopName = shop.name  -%}
 {%- assign shopDescription = shop.description  -%}
@@ -31,38 +32,32 @@
 
   <script data-desc="seo-news" type="application/ld+json">
     {
-    "@context": "http://schema.org",
-    "@type": "NewsArticle",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "{{- shop.url -}}"
-    },
-    "headline": "{{- articleTitle -}}",
-    {%- if article.image -%}
-    "image": {
-      "@type": "ImageObject",
-      "url": "https:{{- article | img_url: '800x800' -}}",
-      "height": "800px",
-      "width": "800px"
-    },
-    {%- endif -%}
-    "dateModified": "{{- article.published_at -}}",
-    "datePublished": "{{- article.created_at -}}",
-    "author": {
-      "@type": "Person",
-      "name": "{{- article.author -}}"
-    },
-     "publisher": {
-      "@type": "Organization",
-      "name": "{{- shopName -}}"
-      {%- if settings.pluginseo_structuredDataDisplayLogo == true  -%}
-        ,"logo": {
-          "@type": "ImageObject",
-          "url": "https:{{- logoUrl -}}"
-        }
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{- shop.url -}}"
+      },
+      "headline": "{{- articleTitle -}}",
+      {%- if article.image -%}
+      "image": {
+        "@type": "ImageObject",
+        "url": "https:{{- article | img_url: '800x800' -}}",
+        "height": "800px",
+        "width": "800px"
+      },
       {%- endif -%}
-    },
-    "description": "{{- articleContent | strip_html | escape | truncate: 163 -}}"
+      "dateModified": "{{- article.published_at -}}",
+      "datePublished": "{{- article.created_at -}}",
+      "author": {
+        "@type": "Person",
+        "name": "{{- article.author -}}"
+      },
+       "publisher": {
+        "@type": "Organization",
+        "@id": "{{ organizationId }}",
+      },
+      "description": "{{- articleContent | strip_html | escape | truncate: 163 -}}"
     }
   </script>
 {%- endif -%}
@@ -195,12 +190,15 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
 {%- assign links = settings.pluginseo_structuredDataSocialProfileLinks | newline_to_br | split: '<br />' -%}
 
 <script data-desc="seo-organization" type="application/ld+json">
-  { "@context" : "http://schema.org",
-    "@type" : "Organization",
-    "name" : "{{- shopName -}}",
-    "url" : "{{- shop.url -}}",
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "@id": "{{ organizationId }}",
+    "name": "{{- shopName -}}",
+    "url": "{{- shop.url -}}",
     {%- if settings.pluginseo_structuredDataDisplayLogo == true  -%}
       "logo": "https:{{- logoUrl -}}",
+      "image": "https:{{- logoUrl -}}"
     {%- endif -%}
     "sameAs" : [
       {%- for sociallink in links -%}
@@ -224,40 +222,36 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
     {
       "@context": "http://schema.org/",
       "@type": "Product",
-      "@id": {{- canonical_url | append: '#product' | json -}},
+      "@id": "{{- canonical_url | append: '#product' -}}",
       "name": "{{- productTitle -}}",
-      "image": "https:{{- product.featured_image | product_img_url: '450x450' -}}",
+      "image": "https:{{- product.featured_image | img_url: '450x450' -}}",
       "description": "{{- productDescription | strip_html | escape -}}",
       "mpn": "{{- product.id -}}",
       "brand": {
         "@type": "Thing",
         "name": "{{- product.vendor -}}"
       },
-          {%- if product.metafields.spr.reviews -%}
-        {%- comment -%}
-          These are perhaps legacy...
-        {%- endcomment -%}
-        {%- assign sprAverage = product.metafields.spr.reviews | split: '<meta itemprop="average" content="' -%}
-                {%- assign sprAverage = sprAverage[1] | split: '" />' -%}
-        {%- assign sprVotes = product.metafields.spr.reviews | split: '<meta itemprop="votes" content="' -%}
-                {%- assign sprVotes = sprVotes[1] | split: '" />' -%}
-        {%- assign sprBest = product.metafields.spr.reviews | split: '<meta itemprop="best" content="' -%}
-                {%- assign sprBest = sprBest[1] | split: '" />' -%}
-        {%- assign sprWorst = product.metafields.spr.reviews | split: '<meta itemprop="worst" content="' -%}
-                {%- assign sprWorst = sprWorst[1] | split: '" />' -%}
-        {%- if sprAverage[0] != blank and sprVotes[0] != blank and sprBest[0] != blank and sprWorst[0] != blank-%}
-                  "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": {{- sprAverage[0] -}},
-            "ratingCount": {{- sprVotes[0] -}},
-            "reviewCount": {{- sprVotes[0] -}},
-            "bestRating": {{- sprBest[0] -}},
-            "worstRating": {{- sprWorst[0] -}}
-          },
-        {%- else -%}
-          {%- comment -%}
-            ...and these are perhaps new:
-          {%- endcomment -%}
+      {%- if product.metafields.spr.reviews -%}
+      {%- comment -%}These are perhaps legacy...{%- endcomment -%}
+      {%- assign sprAverage = product.metafields.spr.reviews | split: '<meta itemprop="average" content="' -%}
+      {%- assign sprAverage = sprAverage[1] | split: '" />' -%}
+      {%- assign sprVotes = product.metafields.spr.reviews | split: '<meta itemprop="votes" content="' -%}
+      {%- assign sprVotes = sprVotes[1] | split: '" />' -%}
+      {%- assign sprBest = product.metafields.spr.reviews | split: '<meta itemprop="best" content="' -%}
+      {%- assign sprBest = sprBest[1] | split: '" />' -%}
+      {%- assign sprWorst = product.metafields.spr.reviews | split: '<meta itemprop="worst" content="' -%}
+      {%- assign sprWorst = sprWorst[1] | split: '" />' -%}
+      {%- if sprAverage[0] != blank and sprVotes[0] != blank and sprBest[0] != blank and sprWorst[0] != blank-%}
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": {{- sprAverage[0] -}},
+          "ratingCount": {{- sprVotes[0] -}},
+          "reviewCount": {{- sprVotes[0] -}},
+          "bestRating": {{- sprBest[0] -}},
+          "worstRating": {{- sprWorst[0] -}}
+        },
+      {%- else -%}
+          {%- comment -%}...and these are perhaps new {%- endcomment -%}
           {%- assign sprBestRating = product.metafields.spr.reviews | split: '<meta itemprop="bestRating" content="' -%}
           {%- assign sprBestRating = sprBestRating[1] | split: '">' -%}
           {%- assign sprWorstRating = product.metafields.spr.reviews | split: '<meta itemprop="worstRating" content="' -%}
@@ -278,19 +272,154 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
           {%- endif %}
         {%- endif -%}
       {%- endif -%}
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "{{- shop.currency -}}",
-        "price": "{{- product.selected_or_first_available_variant.price | divided_by: 100.00 -}}",
+      {%- if product.variants.size > 1 -%}
+        {%- assign variantsByPrice = product.variants | sort: 'price' -%}
+        {%- assign numAvailableVariants = product.variants | where: "available" | size %}
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "{{- shop.currency -}}",
+          "lowPrice": {{- variantsByPrice.first.price | divided_by: 100.0 -}},
+          "highPrice": {{- variantsByPrice.last.price | divided_by: 100.0 -}},
+          "availability": "{%- if numAvailableVariants > 0 -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+          "offerCount": {%- if numAvailableVariants > 0 -%}{{- numAvailableVariants -}}{%- else -%}1{%- endif -%},
+          "seller": {
+            "@type": "Organization",
+            "@id": "{{ organizationId }}"
+          }
+        },
+        "model": [
+          {%- for variant in product.variants -%}
+            {%- if variant.featured_image -%}
+              {%- assign image = variant.featured_image -%}
+            {%- else -%}
+              {%- assign image = product.featured_image -%}
+            {%- endif -%}
+            {
+               "@type": "ProductModel",
+               "@id": "{{- canonical_url | append: '#productModel=' | append: variant.id -}}",
+               "url": "{{- shop.url -}}{{- variant.url -}}",
+               "name": "{{- productTitle | append: " " | append: variant.title -}}",
+               "mpn": "{{- variant.id -}}",
+               {%- if variant.sku -%}
+                 "sku": "{{- variant.sku -}}",
+               {%- endif -%}
+               {%- if variant.barcode -%}
+                 {%- assign barcode = variant.barcode -%}
+                 {%- assign barcodeKey = "" -%}
+                 {%- assign barcodeLength = barcode | size -%}
+                 {%- case barcodeLength 8 -%}
+                   {%- when 8 %}
+                     {%- assign barcodeKey = "gtin8" -%}
+                   {%- when 12 -%}
+                     {%- assign barcodeKey = "gtin12" -%}
+                   {%- when 13 -%}
+                     {%- assign barcodeKey = "gtin13" -%}
+                   {%- when 14 -%}
+                     {%- assign barcodeKey = "gtin14" -%}
+                 {% endcase %}
 
-        "availability": "{%- if product.selected_or_first_available_variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
-        "url": "{{ shop.url }}{{ product.selected_or_first_available_variant.url }}",
+                 {%- unless barcodeKey == blank -%}
+                   "{{ barcodeKey }}": "{{ barcode }}",
+                 {%- endunless -%}
+               {%- endif -%}
+               {%- if variant.requires_shipping and variant.weight > 0 -%}
+                 "weight": {
+                   "@type": "QuantitativeValue",
+                   "value": {{ variant.weight }},
+                   "unitCode": "GRM"
+                 },
+               {%- endif -%}
 
-        "seller": {
-          "@type": "Organization",
-          "name": "{{- shopName -}}"
-        }
+               {%- assign additionalProperties = "" -%}
+               {%- assign colorVariations = "color,colour,kleur,farbe,couleur,colore" | split:"," -%}
+               {%- assign colorFound = false -%}
+
+               {%- for productOption in product.options_with_values -%}
+                 {%- assign optionName = productOption.name -%}
+                 {%- assign optionNameDowncased = optionName | downcase %}
+                 {%- assign optionKey = "option%1" |  replace: "%1", productOption.position -%}
+                 {%- assign value = variant[optionKey] -%}
+
+                 {%- if colorFound != true and colorVariations contains optionNameDowncased -%}
+                   {%- assign colorFound = true -%}
+                   "color": "{{- value -}}",
+                 {%- else -%}
+                   {%- capture additional_property -%}
+                     {
+                       "@type": "PropertyValue",
+                       "name": "{{- optionName -}}",
+                       "value": "{{- value -}}"
+                     }
+                   {%- endcapture -%}
+                   {%- unless additionalProperties == blank -%}
+                     {%- assign additionalProperties = additionalProperties | append: "," -%}
+                   {%- endunless -%}
+                   {%- assign additionalProperties = additionalProperties | append: additional_property -%}
+                 {% endif %}
+               {%- endfor -%}
+
+               {%- unless additionalProperties == blank -%}
+                 "additionalProperty": [{{ additionalProperties }}],
+               {%- endunless -%}
+
+               "image": "https:{{- image | img_url: '450x450' -}}",
+               "offers": {
+                 "@type": "Offer",
+                 "priceCurrency": "{{- shop.currency -}}",
+                 "price": {{- variant.price | divided_by: 100.0 -}},
+                 "availability": "{%- if variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+                 "seller": {
+                   "@type": "Organization",
+                   "@id": "{{ organizationId }}"
+                 }
+               }
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
       }
+      {%- else -%}
+        {%- assign product_or_variant = product.selected_or_first_available_variant -%}
+        {%- if product_or_variant.sku -%}
+          "sku": "{{- product_or_variant.sku -}}",
+        {%- endif -%}
+        {%- if product_or_variant.barcode -%}
+          {%- assign barcode = product_or_variant.barcode -%}
+          {%- assign barcodeKey = "" -%}
+          {%- assign barcodeLength = barcode | size -%}
+          {%- case barcodeLength 8 -%}
+            {%- when 8 %}
+              {%- assign barcodeKey = "gtin8" -%}
+            {%- when 12 -%}
+              {%- assign barcodeKey = "gtin12" -%}
+            {%- when 13 -%}
+              {%- assign barcodeKey = "gtin13" -%}
+            {%- when 14 -%}
+              {%- assign barcodeKey = "gtin14" -%}
+          {% endcase %}
+
+          {%- unless barcodeKey == blank -%}
+            "{{ barcodeKey }}": "{{ barcode }}",
+          {%- endunless -%}
+        {%- endif -%}
+        {%- if product_or_variant.requires_shipping and product_or_variant.weight > 0 -%}
+           "weight": {
+             "@type": "QuantitativeValue",
+             "value": {{ product_or_variant.weight }},
+             "unitCode": "GRM"
+           },
+        {%- endif -%}
+        "offers": {
+          "@type": "Offer",
+          "url": "{{-canonical_url -}}",
+          "priceCurrency": "{{- shop.currency -}}",
+          "price": "{{- product_or_variant.price | divided_by: 100.00 -}}",
+          "availability": "{%- if product_or_variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+          "seller": {
+            "@type": "Organization",
+            "@id": "{{ organizationId }}"
+          }
+        }
+      {%- endif -%}
     }
   </script>
 {%- endif -%}

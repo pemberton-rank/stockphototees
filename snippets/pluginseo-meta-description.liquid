@@ -102,10 +102,10 @@
     {%- if finalMetaDescription > pluginseo_metaDescriptionTruncateChars -%}
       {%- assign mDF = mDF | append: '-tr' -%}
     {%- endif -%}
-    {%- capture metaDescription -%}{{ metaDescription | truncate: pluginseo_metaDescriptionTruncateChars, "" }}{%- endcapture -%}
+    {%- capture metaDescription -%}{{ metaDescription | strip_html | truncate: pluginseo_metaDescriptionTruncateChars, "" }}{%- endcapture -%}
   {%- endif -%}
 
   {%- if metaDescription != blank -%}
-    <meta name="description" content="{{ metaDescription | strip_html | strip_newlines }}" />
+    <meta name="description" content="{{ metaDescription | strip_newlines }}" />
   {%- endif -%}
 {%- endif -%}

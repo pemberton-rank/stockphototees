@@ -55,7 +55,7 @@
       },
        "publisher": {
         "@type": "Organization",
-        "@id": "{{ organizationId }}",
+        "@id": "{{ organizationId }}"
       },
       "description": "{{- articleContent | strip_html | escape | truncate: 163 -}}"
     }
@@ -198,7 +198,7 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
     "url": "{{- shop.url -}}",
     {%- if settings.pluginseo_structuredDataDisplayLogo == true  -%}
       "logo": "https:{{- logoUrl -}}",
-      "image": "https:{{- logoUrl -}}"
+      "image": "https:{{- logoUrl -}}",
     {%- endif -%}
     "sameAs" : [
       {%- for sociallink in links -%}

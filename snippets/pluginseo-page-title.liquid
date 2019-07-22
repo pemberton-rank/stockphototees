@@ -27,7 +27,10 @@
 {%- else -%}
   {%- case rootTemplate -%}
     {%- when 'index' -%}
-      {%- assign defaultPageTitle = ['shop']['name'] -%}
+      {%- assign defaultPageTitle = page.title | escape -%}
+      {%- if defaultPageTitle == blank -%}
+        {%- assign defaultPageTitle = ['shop']['name'] -%}
+      {%- endif -%}
       {%- assign pageTitleTemplate = settings.pluginseo_pageTitleIndexTemplate -%}
       {%- assign pTFTemp = '-te_ix' -%}
     {%- when 'page' -%}

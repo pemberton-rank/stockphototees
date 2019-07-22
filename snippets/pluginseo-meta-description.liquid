@@ -76,8 +76,12 @@
   {%- endif -%}
 
   {%- if metaDescriptionTemplate == blank or metaDescriptionTemplate == nil -%}
-    {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionDefaultTemplate -%}
-    {%- assign mDFTemp = '-te_df' -%}
+    {%- if settings.pluginseo_metaDescriptionDefaultTemplate == blank -%}
+      {%- assign metaDescriptionTemplate = defaultMetaDescription -%}
+    {%- else -%}
+      {%- assign metaDescriptionTemplate = settings.pluginseo_metaDescriptionDefaultTemplate -%}
+      {%- assign mDFTemp = '-te_df' -%}
+    {%- endif -%}
   {%- endif -%}
 
   {%- if metaDescriptionTemplate != nil -%}

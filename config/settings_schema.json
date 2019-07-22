@@ -62,8 +62,7 @@
       {
         "type": "text",
         "id": "pluginseo_pageTitleIndexTemplate",
-        "label": "Homepage",
-        "default": "%% shop.name %%"
+        "label": "Homepage"
       },
       {
         "type": "text",
@@ -150,7 +149,7 @@
         "type": "textarea",
         "id": "pluginseo_metaDescriptionDefaultTemplate",
         "label": "Default",
-        "default": "%% page_description || append_not_empty: '.' %%",
+        "default": "%% page_description %%",
         "info": "this template will apply to all blank page types below"
       },
       {

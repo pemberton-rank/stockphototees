@@ -57,7 +57,7 @@
         "@type": "Organization",
         "@id": "{{ organizationId }}"
       },
-      "description": "{{- articleContent | strip_html | escape | truncate: 163 -}}"
+      "description": "{{- articleContent | newline_to_br | replace: '<br />', ' ' | strip_html | strip_newlines | strip | escape | truncate: 163 -}}"
     }
   </script>
 {%- endif -%}
@@ -200,9 +200,9 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
       "logo": "https:{{- logoUrl -}}",
       "image": "https:{{- logoUrl -}}",
     {%- endif -%}
-    "sameAs" : [
+    "sameAs": [
       {%- for sociallink in links -%}
-        "{{- sociallink -}}"{%- if forloop.last == false -%},{%- endif -%}
+        "{{- sociallink | strip -}}"{%- if forloop.last == false -%},{%- endif -%}
       {%- endfor -%}
     ]
   }
@@ -225,7 +225,7 @@ https://help.shopify.com/themes/customization/navigation/add-breadcrumbs
       "@id": "{{- canonical_url | append: '#product' -}}",
       "name": "{{- productTitle -}}",
       "image": "https:{{- product.featured_image | img_url: '450x450' -}}",
-      "description": "{{- productDescription | strip_html | escape -}}",
+      "description": "{{- productDescription | newline_to_br | replace: '<br />', ' ' | strip_html | strip_newlines | strip | escape -}}",
       "mpn": "{{- product.id -}}",
       "brand": {
         "@type": "Thing",

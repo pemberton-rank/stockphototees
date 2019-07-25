@@ -1,12 +1,5 @@
 <!-- everyone wins -->
 <!-- git test -->
-{%- comment -%}
-  The HTML of this shop is minified by Plug in Speed.
-  You can edit your file as normal inside the "capture minified" tags.
-  You can disable HTML minification through your entire shop by changing
-	useMinification to false in the file snippets/pluginspeed-minify-html.liquid
-{%- endcomment -%}
-{%- capture non_minified_html -%}
 <!doctype html>
 <!--[if IE 9]> <html class="ie9 no-js" lang="{{ shop.locale }}"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{ shop.locale }}"> <!--<![endif]-->
@@ -613,12 +606,3 @@
   {% include 'enzimify' %}
 </body>
 </html>
-{%- endcapture non_minified_html -%}
-{%- assign minifier = 'pluginspeed-minify-html' -%}
-{%- capture minifier_output -%}{%- include minifier, minified: non_minified_html -%}{%- endcapture -%}
-{%- assign error_message = 'Liquid error: Could not find asset snippets/' | append: minifier -%}
-{%- if minifier_output contains error_message -%}
- {{ non_minified_html }}
-{%- else -%}
-  {{ minifier_output }}
-{%- endif -%}

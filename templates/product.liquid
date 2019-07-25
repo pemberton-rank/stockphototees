@@ -35,7 +35,7 @@
     <!-- photos -->
   	<div class="grid__item medium-up--two-thirds">
       <div class="product__photo">
-        <img id="mainProductImage" src="{{ product.featured_image | img_url: '2048x2048' }}" alt="{% if image.alt %}{{ image.alt | escape }}{% else %}{{ product.title | escape }}{% endif %}">
+        <img id="mainProductImage" src="{{ product.featured_image | img_url: '2048x2048' }}" alt="{{ image.alt | escape }}">
       </div>
       <div class="product__thumbnails medium-up--hide">
         {% for image in product.images %}

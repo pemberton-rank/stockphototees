@@ -9,7 +9,7 @@
     "pluginseo_pageTitleIndexTemplate": "stockphototees stockphototees stockphototees stockphototees stockphototees stockphototees stockphototees stockphototees",
     "pluginseo_pageTitlePageTemplate": "%% page_title %%",
     "pluginseo_pageTitleSearchTemplate": "Buy %% search.terms %% t-shirts from %% shop.name %%",
-    "pluginseo_pageTitleProductTemplate": "%% product.title %% %% product.selected_variant.title %%",
+    "pluginseo_pageTitleProductTemplate": "%% product.title %%%% product.selected_variant.title || prepend_not_empty: ' ' %%",
     "pluginseo_pageTitleCollectionTemplate": "Shop %% current_tags || join: ', ' || append_not_empty: ' ' %%%% collection.title %% at %% shop.name %%",
     "pluginseo_pageTitleCatalogTemplate": "Browse %% collection.products || map: 'collections' || map: 'title' || uniq || take: '5' || join: ', ' || escape || remove: 'Home page, ' || remove: 'home page, '  || remove: 'Home page' || remove: 'Home page'  %% at %% shop.name %%",
     "pluginseo_pageTitleBlogTemplate": "%% shop.name %% %% blog.title %% blog: %% blog.all_tags || take: '5' || join: ', ' || append_not_empty: ' and more' %%",

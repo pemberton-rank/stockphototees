@@ -68,7 +68,7 @@
         "type": "text",
         "id": "pluginseo_pageTitlePageTemplate",
         "label": "Page",
-        "default": "%% page.title %%"
+        "default": "%% page_title %%"
       },
       {
         "type": "text",
@@ -241,6 +241,46 @@
         "type": "textarea",
         "id": "pluginseo_structuredDataSocialProfileLinks",
         "label": "Social profile links - one URL per line"
+      },
+      {
+        "type": "header",
+        "content": "Reviews"
+      },
+      {
+        "type": "select",
+        "id": "pluginseo_structuredDataReviewApp",
+        "label": "Review App",
+        "default": "autodetect",
+        "options": [
+          {
+            "value": "autodetect",
+            "label": "Auto-Detect"
+          },
+          {
+            "value": "judgeme",
+            "label": "Judge.me"
+          },
+          {
+            "value": "loox",
+            "label": "Loox"
+          },
+          {
+            "value": "opinew",
+            "label": "Opinew"
+          },
+          {
+            "value": "shopify_product_reviews",
+            "label": "Shopify Product Reviews"
+          },
+          {
+            "value": "stamped",
+            "label": "Stamped.io"
+          },
+          {
+            "value": "rivyo",
+            "label": "Rivyo"
+          }
+        ]
       }
     ]
   },

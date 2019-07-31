@@ -21,7 +21,7 @@
     "pluginseo_metaDescriptionIndexTemplate": "T-shirts paying tribute to the ubiquitous stock photo",
     "pluginseo_metaDescriptionPageTemplate": "%% page_description %%",
     "pluginseo_metaDescriptionSearchTemplate": "Find %% search.terms %% at Stock Photo Tees- the place to celebrate stock photography",
-    "pluginseo_metaDescriptionProductTemplate": "%% product.description || strip_newlines || replace: '<ul>', ' ' || replace: '<li>', ', ' || replace: '.,', ',' || strip_html || escape %%<\/li>\n<\/ul>",
+    "pluginseo_metaDescriptionProductTemplate": "%% product.description || strip_newlines || replace: ‘<ul>‘, ’ ' || replace: ‘<li>‘, ‘, ’ || replace: ‘.,‘, ‘,’ || strip_html || escape %%<\/li>\n<\/ul>",
     "pluginseo_metaDescriptionCollectionTemplate": "%% collection.all_tags || take: '3' || join: ', ' || prepend_not_empty: 'Shop ' || append_not_empty: ' and more ' %%%% collection.title %% at %% shop.name %%: cheesy t-shirts for designers. %% collection.description || strip_html || strip_newlines || escape || strip || append_not_empty: '. ' %%Stock photo tees of business cliches, exaggerated expressions and retro technology.",
     "pluginseo_metaDescriptionCatalogTemplate": "Discover %% collection.products || map: 'title' || uniq || take: '3' || join: ', ' || escape %% and more.",
     "pluginseo_metaDescriptionBlogTemplate": "",

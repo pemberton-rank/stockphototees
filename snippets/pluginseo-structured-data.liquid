@@ -528,7 +528,7 @@ https://developers.google.com/search/docs/data-types/sitelinks-searchbox
     }
   }
 </script>
-{%- if settings.pluginseo_structuredDataDisplayLocalBusiness -%}
+{%- if settings.pluginseo_structuredDataDisplayLocalBusiness and settings.pluginseo_structuredDataDisplayLogo -%}
   {%- assign localBusinessName = settings.pluginseo_structuredDataBusinessName -%}
   {%- assign localBusinessUrl = settings.pluginseo_structuredDataShopUrl -%}
   {%- assign localBusinessTelephone = settings.pluginseo_structuredDataContactPhone -%}
@@ -543,6 +543,7 @@ https://developers.google.com/search/docs/data-types/sitelinks-searchbox
     {
       "@context": "http://schema.org",
       "@type": "LocalBusiness",
+      "image": "{{- logoUrl -}}",
       {%- if localBusinessName != blank -%}"name": "{{- localBusinessName -}}",{%- endif -%}
       {%- if localBusinessUrl != blank -%}"url": "{{- localBusinessUrl -}}",{%- endif -%}
       {%- if localBusinessTelephone != blank -%}"telephone": "{{- localBusinessTelephone -}}",{%- endif -%}

@@ -123,7 +123,7 @@
 
     ],
     "pluginseo_structuredDataReviewApp": "shopify_product_reviews",
-    "pluginseo_structuredDataDisplayLocalBusiness": true,
+    "pluginseo_structuredDataDisplayLocalBusiness": false,
     "pluginseo_structuredDataBusinessName": "Stock Photo Tees",
     "pluginseo_structuredDataShopUrl": "https:\/\/stockphototees.com",
     "pluginseo_structuredDataBusinessEmail": "hello@stockphototees.com",
